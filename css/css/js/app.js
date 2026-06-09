@@ -1,115 +1,106 @@
-const products = [
-{
-    id:1,
-    nom:"Pack LUT Cinematic",
-    image:"https://via.placeholder.com/600x400",
-    video:"https://www.youtube.com/embed/demo",
-    description:"Pack professionnel de LUTs cinématiques.",
-    prix:"5€",
-    categorie:"LUTs",
-    downloads:245,
-    popular:true,
-    paymentUrl:"#"
-},
+async function loadProducts() {
 
-{
-    id:2,
-    nom:"Template Premiere Pro",
-    image:"https://via.placeholder.com/600x400",
-    video:"https://www.youtube.com/embed/demo",
-    description:"Template moderne Premiere Pro.",
-    prix:"10€",
-    categorie:"Premiere Pro Templates",
-    downloads:120,
-    popular:true,
-    paymentUrl:"#"
-}
-];
+    try {
 
-const productsContainer =
-document.getElementById("productsContainer");
+        const response = await fetch("data/products.json");
+        const products = await response.json();
 
-const popularProducts =
-document.getElementById("popularProducts");
+        const productsContainer =
+        document.getElementById("productsContainer");
 
-function createCard(product){
+        const popularProducts =
+        document.getElementById("popularProducts");
 
-return `
-<div class="product-card">
+        function createCard(product) {
 
-<img src="${product.image}" alt="${product.nom}">
+            return `
+            <a href="product.html?id=${product.id}" style="text-decoration:none;color:white;">
 
-<div class="product-info">
+                <div class="product-card">
 
-<h3 class="product-title">
-${product.nom}
-</h3>
+                    <img src="${product.image}" alt="${product.nom}">
 
-<p>${product.categorie}</p>
+                    <div class="product-info">
 
-<p class="product-price">
-${product.prix}
-</p>
+                        <h3 class="product-title">
+                            ${product.nom}
+                        </h3>
 
-<p>
-${product.downloads} téléchargements
-</p>
+                        <p>
+                            ${product.categorie}
+                        </p>
 
-<a
-href="${product.paymentUrl}"
-class="buy-btn"
-target="_blank"
->
-Acheter
-</a>
+                        <p class="product-price">
+                            ${product.prix}
+                        </p>
 
-</div>
+                        <p>
+                            ${product.downloads} téléchargements
+                        </p>
 
-</div>
-`;
-}
+                        <div class="buy-btn">
+                            Voir le produit
+                        </div>
 
-if(productsContainer){
+                    </div>
 
-productsContainer.innerHTML =
-products.map(createCard).join("");
+                </div>
 
-}
+            </a>
+            `;
+        }
 
-if(popularProducts){
+        if (productsContainer) {
 
-popularProducts.innerHTML =
-products
-.filter(product => product.popular)
-.map(createCard)
-.join("");
+            productsContainer.innerHTML =
+            products.map(createCard).join("");
 
-}
+        }
 
-const searchInput =
-document.getElementById("searchInput");
+        if (popularProducts) {
 
-if(searchInput){
+            popularProducts.innerHTML =
+            products
+            .filter(product => product.popular)
+            .map(createCard)
+            .join("");
 
-searchInput.addEventListener("input", e => {
+        }
 
-const value =
-e.target.value.toLowerCase();
+        const searchInput =
+        document.getElementById("searchInput");
 
-const filtered =
-products.filter(product =>
+        if (searchInput) {
 
-product.nom.toLowerCase().includes(value)
-||
-product.categorie.toLowerCase().includes(value)
-||
-product.description.toLowerCase().includes(value)
+            searchInput.addEventListener("input", e => {
 
-);
+                const value =
+                e.target.value.toLowerCase();
 
-productsContainer.innerHTML =
-filtered.map(createCard).join("");
+                const filtered =
+                products.filter(product =>
 
-});
+                    product.nom.toLowerCase().includes(value)
+                    ||
+                    product.categorie.toLowerCase().includes(value)
+                    ||
+                    product.description.toLowerCase().includes(value)
+
+                );
+
+                productsContainer.innerHTML =
+                filtered.map(createCard).join("");
+
+            });
+
+        }
+
+    } catch (error) {
+
+        console.error("Erreur chargement produits :", error);
+
+    }
 
 }
+
+loadProducts();
