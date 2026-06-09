@@ -1,0 +1,15 @@
+[
+  {
+    "id": 1,
+    "nom": "Produit Exemple",
+    "image": "public/images/exemple.jpg",
+    "video": "https://www.youtube.com/embed/VIDEO_ID",
+    "description": "Description du produit.",
+    "prix": "5€",
+    "categorie": "LUTs",
+    "downloads": 0,
+    "popular": true,
+    "paymentUrl": "https://ton-lien-vanillapay.com",
+    "downloadUrl": "https://ton-lien-telechargement.com"
+  }
+]
