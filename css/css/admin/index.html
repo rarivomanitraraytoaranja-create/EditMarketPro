@@ -1,132 +1,154 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - ÉDIT MARKET PRO</title>
 
-<title>Produit - ÉDIT MARKET PRO</title>
+<style>
 
-<link rel="stylesheet" href="css/style.css">
+body{
+background:#0f0f0f;
+color:white;
+font-family:Arial,sans-serif;
+padding:30px;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+}
+
+.card{
+background:rgba(255,255,255,.05);
+padding:20px;
+border-radius:20px;
+margin-bottom:20px;
+}
+
+input,textarea,select{
+width:100%;
+padding:12px;
+margin-top:10px;
+margin-bottom:15px;
+border:none;
+border-radius:10px;
+}
+
+button{
+background:#8B5CF6;
+color:white;
+border:none;
+padding:12px 20px;
+border-radius:10px;
+cursor:pointer;
+}
+
+textarea{
+min-height:120px;
+}
+
+#result{
+white-space:pre-wrap;
+margin-top:20px;
+}
+
+</style>
+
 </head>
-
 <body>
 
-<header class="navbar">
+<div class="container">
 
-<a href="index.html" style="text-decoration:none;color:white;">
-← Retour à l'accueil
-</a>
+<h1>ÉDIT MARKET PRO ADMIN</h1>
 
-</header>
+<div class="card">
 
-<div class="product-page">
+<h2>Ajouter un produit</h2>
 
-<img
-id="productImage"
-class="product-page-image"
-src=""
-alt=""
->
+<input id="nom" placeholder="Nom du produit">
 
-<h1 id="productTitle"></h1>
+<input id="prix" placeholder="Prix">
 
-<p id="productCategory"></p>
+<input id="categorie" placeholder="Catégorie">
 
-<p id="productPrice"></p>
+<input id="image" placeholder="Image">
 
-<p id="productDownloads"></p>
+<input id="video" placeholder="Lien vidéo">
 
-<div class="video-container">
+<input id="paymentUrl" placeholder="Lien Vanilla Pay">
 
-<iframe
-id="productVideo"
-width="100%"
-height="500"
-src=""
-frameborder="0"
-allowfullscreen>
-</iframe>
+<input id="downloadUrl" placeholder="Lien téléchargement">
+
+<select id="popular">
+<option value="true">Populaire</option>
+<option value="false">Non populaire</option>
+</select>
+
+<textarea id="description" placeholder="Description"></textarea>
+
+<button onclick="generateJson()">
+Générer le produit
+</button>
 
 </div>
 
-<p id="productDescription"></p>
+<div class="card">
 
-<a
-id="buyButton"
-class="buy-btn"
-target="_blank"
-href="#"
->
-Acheter maintenant
-</a>
+<h2>Réseaux sociaux</h2>
+
+<input placeholder="TikTok">
+<input placeholder="Instagram">
+<input placeholder="Facebook">
+<input placeholder="YouTube">
+
+</div>
+
+<div class="card">
+
+<h2>JSON généré</h2>
+
+<div id="result"></div>
+
+</div>
 
 </div>
 
 <script>
 
-const products = [
+function generateJson(){
 
-{
-id:1,
-nom:"Pack LUT Cinematic",
-image:"https://via.placeholder.com/1200x700",
-video:"https://www.youtube.com/embed/dQw4w9WgXcQ",
-description:"Pack professionnel de LUTs cinématiques.",
-prix:"5€",
-categorie:"LUTs",
-downloads:245,
-paymentUrl:"#"
-},
+const product = {
 
-{
-id:2,
-nom:"Template Premiere Pro",
-image:"https://via.placeholder.com/1200x700",
-video:"https://www.youtube.com/embed/dQw4w9WgXcQ",
-description:"Template moderne Premiere Pro.",
-prix:"10€",
-categorie:"Premiere Pro Templates",
-downloads:120,
-paymentUrl:"#"
-}
+id: Date.now(),
 
-];
+nom: document.getElementById("nom").value,
 
-const params =
-new URLSearchParams(window.location.search);
+image: document.getElementById("image").value,
 
-const productId =
-parseInt(params.get("id"));
+video: document.getElementById("video").value,
 
-const product =
-products.find(p => p.id === productId);
+description: document.getElementById("description").value,
 
-if(product){
+prix: document.getElementById("prix").value,
 
-document.getElementById("productImage").src =
-product.image;
+categorie: document.getElementById("categorie").value,
 
-document.getElementById("productTitle").textContent =
-product.nom;
+downloads: 0,
 
-document.getElementById("productCategory").textContent =
-"Catégorie : " + product.categorie;
+popular:
+document.getElementById("popular").value === "true",
 
-document.getElementById("productPrice").textContent =
-"Prix : " + product.prix;
+paymentUrl:
+document.getElementById("paymentUrl").value,
 
-document.getElementById("productDownloads").textContent =
-"Téléchargements : " + product.downloads;
+downloadUrl:
+document.getElementById("downloadUrl").value
 
-document.getElementById("productVideo").src =
-product.video;
+};
 
-document.getElementById("productDescription").textContent =
-product.description;
-
-document.getElementById("buyButton").href =
-product.paymentUrl;
+document.getElementById("result").textContent =
+JSON.stringify(product,null,2);
 
 }
 
