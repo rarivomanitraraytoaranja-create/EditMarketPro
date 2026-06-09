@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Produit - ÉDIT MARKET PRO</title>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+<a href="index.html" style="text-decoration:none;color:white;">
+← Retour à l'accueil
+</a>
+
+</header>
+
+<div class="product-page">
+
+<img
+id="productImage"
+class="product-page-image"
+src=""
+alt=""
+>
+
+<h1 id="productTitle"></h1>
+
+<p id="productCategory"></p>
+
+<p id="productPrice"></p>
+
+<p id="productDownloads"></p>
+
+<div class="video-container">
+
+<iframe
+id="productVideo"
+width="100%"
+height="500"
+src=""
+frameborder="0"
+allowfullscreen>
+</iframe>
+
+</div>
+
+<p id="productDescription"></p>
+
+<a
+id="buyButton"
+class="buy-btn"
+target="_blank"
+href="#"
+>
+Acheter maintenant
+</a>
+
+</div>
+
+<script>
+
+const products = [
+
+{
+id:1,
+nom:"Pack LUT Cinematic",
+image:"https://via.placeholder.com/1200x700",
+video:"https://www.youtube.com/embed/dQw4w9WgXcQ",
+description:"Pack professionnel de LUTs cinématiques.",
+prix:"5€",
+categorie:"LUTs",
+downloads:245,
+paymentUrl:"#"
+},
+
+{
+id:2,
+nom:"Template Premiere Pro",
+image:"https://via.placeholder.com/1200x700",
+video:"https://www.youtube.com/embed/dQw4w9WgXcQ",
+description:"Template moderne Premiere Pro.",
+prix:"10€",
+categorie:"Premiere Pro Templates",
+downloads:120,
+paymentUrl:"#"
+}
+
+];
+
+const params =
+new URLSearchParams(window.location.search);
+
+const productId =
+parseInt(params.get("id"));
+
+const product =
+products.find(p => p.id === productId);
+
+if(product){
+
+document.getElementById("productImage").src =
+product.image;
+
+document.getElementById("productTitle").textContent =
+product.nom;
+
+document.getElementById("productCategory").textContent =
+"Catégorie : " + product.categorie;
+
+document.getElementById("productPrice").textContent =
+"Prix : " + product.prix;
+
+document.getElementById("productDownloads").textContent =
+"Téléchargements : " + product.downloads;
+
+document.getElementById("productVideo").src =
+product.video;
+
+document.getElementById("productDescription").textContent =
+product.description;
+
+document.getElementById("buyButton").href =
+product.paymentUrl;
+
+}
+
+</script>
+
+</body>
+</html>
