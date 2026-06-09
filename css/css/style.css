@@ -165,3 +165,35 @@ body{
     }
 
 }
+.product-page{
+    max-width:1200px;
+    margin:auto;
+    padding:40px 20px;
+}
+
+.product-page-image{
+    width:100%;
+    border-radius:20px;
+    margin-bottom:20px;
+}
+
+.video-container{
+    margin:30px 0;
+    overflow:hidden;
+    border-radius:20px;
+}
+
+#productTitle{
+    margin-bottom:15px;
+}
+
+#productPrice{
+    color:#A78BFA;
+    font-size:22px;
+    margin:15px 0;
+}
+
+#productDescription{
+    margin:30px 0;
+    line-height:1.8;
+}
