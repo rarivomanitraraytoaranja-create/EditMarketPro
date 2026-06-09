@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Produit - ÉDIT MARKET PRO</title>
+<title>ÉDIT MARKET PRO - Produit</title>
 
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -20,7 +20,7 @@
 
 </header>
 
-<div class="product-page">
+<main class="product-page">
 
 <img
 id="productImage"
@@ -55,80 +55,90 @@ allowfullscreen>
 <a
 id="buyButton"
 class="buy-btn"
-target="_blank"
 href="#"
+target="_blank"
 >
 Acheter maintenant
 </a>
 
-</div>
+</main>
 
 <script>
 
-const products = [
+async function loadProduct() {
 
-{
-id:1,
-nom:"Pack LUT Cinematic",
-image:"https://via.placeholder.com/1200x700",
-video:"https://www.youtube.com/embed/dQw4w9WgXcQ",
-description:"Pack professionnel de LUTs cinématiques.",
-prix:"5€",
-categorie:"LUTs",
-downloads:245,
-paymentUrl:"#"
-},
+    try {
 
-{
-id:2,
-nom:"Template Premiere Pro",
-image:"https://via.placeholder.com/1200x700",
-video:"https://www.youtube.com/embed/dQw4w9WgXcQ",
-description:"Template moderne Premiere Pro.",
-prix:"10€",
-categorie:"Premiere Pro Templates",
-downloads:120,
-paymentUrl:"#"
+        const response =
+        await fetch("data/products.json");
+
+        const products =
+        await response.json();
+
+        const params =
+        new URLSearchParams(window.location.search);
+
+        const productId =
+        parseInt(params.get("id"));
+
+        const product =
+        products.find(
+            p => p.id === productId
+        );
+
+        if (!product) {
+
+            document.body.innerHTML =
+            "<h1 style='padding:40px'>Produit introuvable</h1>";
+
+            return;
+
+        }
+
+        document.getElementById("productImage").src =
+        product.image;
+
+        document.getElementById("productImage").alt =
+        product.nom;
+
+        document.getElementById("productTitle").textContent =
+        product.nom;
+
+        document.getElementById("productCategory").textContent =
+        "Catégorie : " + product.categorie;
+
+        document.getElementById("productPrice").textContent =
+        "Prix : " + product.prix;
+
+        document.getElementById("productDownloads").textContent =
+        "Téléchargements : " + product.downloads;
+
+        document.getElementById("productVideo").src =
+        product.video;
+
+        document.getElementById("productDescription").textContent =
+        product.description;
+
+        document.getElementById("buyButton").href =
+        product.paymentUrl;
+
+        document.title =
+        product.nom + " - ÉDIT MARKET PRO";
+
+    }
+
+    catch(error) {
+
+        console.error(error);
+
+        document.body.innerHTML =
+        "<h1 style='padding:40px'>Erreur de chargement</h1>";
+
+    }
+
 }
 
-];
-
-const params =
-new URLSearchParams(window.location.search);
-
-const productId =
-parseInt(params.get("id"));
-
-const product =
-products.find(p => p.id === productId);
-
-if(product){
-
-document.getElementById("productImage").src =
-product.image;
-
-document.getElementById("productTitle").textContent =
-product.nom;
-
-document.getElementById("productCategory").textContent =
-"Catégorie : " + product.categorie;
-
-document.getElementById("productPrice").textContent =
-"Prix : " + product.prix;
-
-document.getElementById("productDownloads").textContent =
-"Téléchargements : " + product.downloads;
-
-document.getElementById("productVideo").src =
-product.video;
-
-document.getElementById("productDescription").textContent =
-product.description;
-
-document.getElementById("buyButton").href =
-product.paymentUrl;
-
-}
+loadProduct();
 
 </script>
 
